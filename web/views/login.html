@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">@import url("/static/css/main.css");</style>
+    <title>Sign in @ayPass</title>
+</head>
+<body class="ui_charcoal login-page application navless" >
+    <div class="page-wrap">
+        <header class="navbar navbar-fixed-top navbar-empty">
+            <div class="container">
+                <div class="center-logo">
+                    <svg width="24" height="24" class="tanuki-logo">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#tanuki-logo"></use>
+                    </svg>
+                </div>
+            </div>
+        </header>
+        <div class="container navless-container">
+            <div class="content">
+                <div class="flash-container flash-container-page">
+                </div>
+                <div class="row">
+                    <div class="col-sm-5 pull-right new-session-forms-container">
+                        <div>
+                            <ul class="nav-links new-session-tabs nav-tabs" role="tablist">
+                                <li class="active" role="presentation">
+                                    <a data-toggle="tab" href="#login-pane" role="tab">Sign in</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="login-box tab-pane active" id="login-pane" role="tabpanel">
+                                    <div class="login-body">
+                                        <form class="new_user gl-show-field-errors" aria-live="assertive" id="login_form">
+                                            <div class="form-group">
+                                                <label for="username">Username or email</label>
+                                                <input class="form-control top" autofocus="autofocus" autocapitalize="off" autocorrect="off" type="text" id="username"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input class="form-control bottom" type="password" id="password"/>
+                                            </div>
+                                            <div class="remember-me checkbox">
+                                                <label for="remember_me">
+                                                    <input class="remember-me-checkbox" type="checkbox" value="1" id="remember_me">
+                                                    <span>Remember me</span>
+                                                </label>
+                                                <div class="pull-right forgot-password">
+                                                    <a href="##" id="sign_up">Sign up</a>
+                                                </div>
+                                            </div>
+                                            <div class="submit-container move-submit-down">
+                                                <input type="submit" id="btn_submit" value="Sign in" class="btn btn-save">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7 brand-holder pull-left">
+                        <h1> Project Black Stone </h1>
+                        <h3> Welcome </h3>
+                        <span class="text-danger" id="error_message"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-fixed">
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="https://ayiis.me">ayiis.me</a>
+                <a href="https://github.com/ayiis">Github</a>
+                <a href="https://wodove.com/">Wodove</a>
+            </div>
+        </div>
+    </div>
+    {% include './templete/bottom_script.html'%}
+    <script type="text/javascript">
+        (function() {
+            $('#btn_submit').click(function(event) {
+                event.preventDefault();
+                var req_data = {
+                    'username': $('#username').val(),
+                    'password': $('#password').val(),
+                    'remember_me': $('#remember_me').val(),
+                    'ts': (new Date).getTime(),
+                }
+                if(req_data.username && req_data.password) {
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json',
+                        url: '/user_login',
+                        data: JSON.stringify(req_data),
+                        dataType: 'json',
+                        success: function(res_data) {
+                            if (res_data.code === 200) {
+                                window.location = '/note_list' ;
+                            } else {
+                                $('#password').val(null);
+                                $('#error_message').text(res_data.desc);
+                            }
+                        },
+                        error: function(err) {
+                            $('#password').val(null);
+                            $('#error_message').text(err.responseText);
+                        }
+                    });
+                } else {
+                    $('#error_message').text('Input an username and a password.');
+                }
+            });
+            $('#sign_up').click(function(event) {
+                event.preventDefault();
+                var req_data = {
+                    'username': $('#username').val(),
+                    'password': $('#password').val(),
+                    'ts': (new Date).getTime(),
+                }
+                if(req_data.username && req_data.password) {
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json',
+                        url: '/user_create',
+                        data: JSON.stringify(req_data),
+                        dataType: 'json',
+                        success: function(res_data) {
+                            if (res_data.code === 200) {
+                                $('#error_message').text('Success, redirecting to user center in 3 seconds...');
+                                setTimeout(function() {
+                                    $('#btn_submit').click();
+                                }, 3000);
+                            } else {
+                                $('#password').val(null);
+                                $('#error_message').text(res_data.desc);
+                            }
+                        },
+                        error: function(err) {
+                            $('#password').val(null);
+                            $('#error_message').text(err.responseText);
+                        }
+                    });
+                } else {
+                    $('#error_message').text('Input an username and a password.');
+                }
+            });
+        })();
+    </script>
+<body>
+</html>

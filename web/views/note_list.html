@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">@import url("/static/css/main.css");</style>
+    <title>Sign in @ayPass</title>
+</head>
+
+<body class="ui_indigo " data-group="" data-page="profiles:accounts:show" data-project="">
+    {% include './templete/header.html'%}
+    <div class="page-with-new-sidebar page-with-sidebar">
+        {% include './templete/nav-sidebar.html'%}
+        <div class="content-wrapper page-with-new-nav">
+            <div class="mobile-overlay"></div>
+            <div class="alert-wrapper">
+                <nav class="breadcrumbs container-fluid container-limited" role="navigation">
+                    <div class="breadcrumbs-container">
+                        <button name="button" type="button" class="toggle-mobile-nav"><span class="sr-only">Open sidebar</span>
+                            <i aria-hidden="true" data-hidden="true" class="fa fa-bars"></i>
+                        </button>
+                        <div class="breadcrumbs-links js-title-container">
+                            <ul class="list-unstyled breadcrumbs-list js-breadcrumbs-list">
+                                <li><a href="/account">User Center</a>
+                                    <svg class="s8 breadcrumbs-list-angle">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#angle-right"></use>
+                                    </svg>
+                                </li>
+                                <li>
+                                    <h2 class="breadcrumbs-sub-title">Notes</h2>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="flash-container flash-container-page">
+                </div>
+            </div>
+            <div class="container-fluid container-limited">
+                <div class="top-area scrolling-tabs-container inner-page-scroll-tabs">
+                    <div class="fade-left"><i aria-hidden="true" data-hidden="true" class="fa fa-angle-left"></i></div>
+                    <div class="fade-right"><i aria-hidden="true" data-hidden="true" class="fa fa-angle-right"></i></div>
+                    <ul class="nav-links scrolling-tabs is-initialized">
+                        <li class="active"><a title="Home" class="shortcuts-activity" data-placement="right" href="/note_list">Your notes </a></li>
+                    </ul>
+                    <div class="nav-controls">
+                        <form class="project-filter-form" id="project-filter-form" action="/dashboard/projects?sort=latest_activity_desc" accept-charset="UTF-8" method="get">
+                            <input name="utf8" type="hidden" value="✓">
+                            <input type="search" name="name" id="title" placeholder="Filter by name..." class="project-filter-form-field form-control input-short js-projects-list-filter" spellcheck="false" tabindex="2" value="">
+                            <input type="hidden" name="sort" id="sort" value="latest_activity_desc">
+                        </form>
+                        <div class="dropdown">
+                            <button class="dropdown-menu-toggle " id="sort-projects-dropdown" type="button" data-toggle="dropdown" aria-expanded="false">
+                                <span class="dropdown-toggle-text" val="-2" id="sort_type">Last updated</span>
+                                <i aria-hidden="true" data-hidden="true" class="fa fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-align-right dropdown-menu-selectable">
+                                <li class="dropdown-header"> Sort by </li>
+                                <li> <a href="" val="1">Name </a></li>
+                                <li> <a href="" val="-1">Name Desc </a></li>
+                                <li> <a href="" val="-2">Last updated </a></li>
+                                <li> <a href="" val="2">Oldest updated </a></li>
+                                <li> <a href="" val="-3">Last created </a></li>
+                                <li> <a href="" val="3">Oldest created </a></li>
+                            </ul>
+                        </div>
+                        <a class="btn btn-new" href="/note_create">New note</a>
+                        <a class="btn btn-info" href="" id="btn_search">Search</a>
+                    </div>
+                </div>
+                <div class="js-projects-list-holder">
+                    <ul class="projects-list" id="projects_list">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="templete" id="templete_note">
+        <li class="no-description project-row">
+            <div class="avatar-container s40">
+                <a class="project" href="">
+                    <div class="avatar project-avatar s40 identicon" style="background-color: #F3E5F5; color: #555"></div>
+                </a>
+            </div>
+            <div class="project-details">
+                <h3 class="prepend-top-0 append-bottom-0">
+                    <a class="project" href="">
+                        <span class="project-full-name">
+                            <span class="project-name"></span>
+                        </span>
+                    </a>
+                </h3>
+            </div>
+            <div class="controls">
+                <div class="prepend-top-0">
+                    <span class="prepend-left-10"> <i aria-hidden="true" data-hidden="true" class="fa fa-star"></i> 0 </span>
+                    <span class="prepend-left-10 visibility-icon has-tooltip"> <i aria-hidden="true" class="fa fa-lock fa-fw"></i> </span>
+                </div>
+                <div class="prepend-top-0">
+                    <time class="js-timeago js-timeago-render"></time>
+                </div>
+            </div>
+        </li>
+    </script>
+    {% include './templete/bottom_script.html'%}
+    <script type="text/javascript">
+        (function() {
+
+            function do_search() {
+                var req_data = {
+                    'title': $('#title').val() || '',
+                    'sort_type': Number($('#sort_type').attr('val') || ''),
+                };
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/json',
+                    url: '/note_list',
+                    data: JSON.stringify(req_data),
+                    dataType: 'json',
+                    success: function(res_data) {
+                        if (res_data.code == 200) {
+                            var ele_list = [];
+                            for (var i = 0 ; i < res_data.data.length ; i++ ) {
+                                var item = res_data.data[i];
+                                var $templete_note = $($('#templete_note').html().trim());
+                                var $e1 = $templete_note.find('.avatar-container .project');
+                                $e1.attr('href', '/note_edit?id=' + item['_id']);
+                                $e1.find('div').text(item['title'][0]);
+                                var $e2 = $templete_note.find('.project-details .project');
+                                $e2.attr('href', '/note_edit?id=' + item['_id']);
+                                $e2.find('.project-name').text(item['title']);
+                                var $e3 = $templete_note.find('.controls');
+                                $e3.find('.js-timeago').text( 'U' + item['update_datetime'] + ' / ' + 'C' + item['create_datetime']);
+                                ele_list.push($templete_note);
+                            }
+                            $('#projects_list').empty().append(ele_list);
+                        } else {
+
+                        }
+                    },
+                    error: function(err) {
+                        $('#res_status').text('Error.');
+                        $('#p_message').text(err.responseText);
+                    }
+                });
+            }
+            do_search();
+            $('#btn_search').click(function(event){
+                event.preventDefault();
+                do_search();
+            });
+
+            $('#sort-projects-dropdown').click(function(){
+                if($(this).attr('aria-expanded') == 'false') {
+                    $(this).attr('aria-expanded', 'true');
+                    $(this).closest('div').addClass('open');
+                } else {
+                    $(this).attr('aria-expanded', 'false');
+                    $(this).closest('div').removeClass('open');
+                }
+            });
+
+            $('.dropdown-menu').on('click', 'a', function(event){
+                event.preventDefault();
+                $('#sort-projects-dropdown').click();
+                $(this).closest('.dropdown').find('.dropdown-toggle-text').attr('val', $(this).attr('val')).text($(this).text());
+            });
+        })();
+        </script>
+</body>
+
+</html>
