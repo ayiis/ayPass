@@ -66,7 +66,6 @@ def main():
         define("port", default=config.SYSTEM["api_port"], help="run on the given port", type=int)
         options.parse_command_line()
 
-        # my_redis.init()
         yield my_mongodb.init()
 
         settings = {
@@ -81,11 +80,6 @@ def main():
             (r"/.*", DefaultRouterHandler)  # 默认处理方法，其他处理方法需在此方法之前声明
         ], **settings).listen(options.port)
 
-        # redis 临时解决方案
-        # import redisp
-        # login_redis = yield redisp.init()
-        # print login_redis
-
     except Exception as e:
         print traceback.format_exc()
         tornado.ioloop.IOLoop.current().stop()
@@ -97,7 +91,6 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-        # test()
         tornado.ioloop.IOLoop.current().start()
     except Exception as e:
         print traceback.format_exc()

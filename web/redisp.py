@@ -45,22 +45,3 @@ class MY_REDIS(object):
 
 
 ONLINE_USERS = MY_REDIS({})
-
-
-def init():
-    from common import user
-
-    ONLINE_USERS["q1WzY1aAHIK84suSs2Tq+w=="] = user.User({
-        "username": "abc",
-        "password": "123456",
-    })
-
-    ONLINE_USERS["L8bDmhfhBycOjcjtz9L2kA=="] = user.User({
-        "username": "abc",
-        "password": "123",
-    })
-
-    ONLINE_USERS["q1WzY1aAHIK84suSs2Tq+w=="].userip = "127.0.0.1"
-    ONLINE_USERS["L8bDmhfhBycOjcjtz9L2kA=="].userip = "127.0.0.1"
-
-    return [ONLINE_USERS["q1WzY1aAHIK84suSs2Tq+w=="].login(), ONLINE_USERS["L8bDmhfhBycOjcjtz9L2kA=="].login()]
