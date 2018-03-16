@@ -72,12 +72,8 @@ def getMd5Base64(val):
     return base64.encodestring(hash.digest()).rstrip()
 
 
-def get_md5_digest(text, salt=config.SECRET["md5_salt"]):
-    return hashlib.md5( "%s:%s" % (text, salt)).digest()
-
-
-def get_sha256_digest(text, salt=config.SECRET["md5_salt"]):
-    return hashlib.sha256( "%s:%s" % (text, salt)).digest()
+def get_md5_digest(text):
+    return hashlib.md5( "%s:%s" % (text, config.SECRET["md5_salt"])).digest()
 
 
 # BS = 16
