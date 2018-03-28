@@ -105,3 +105,7 @@ def my_encrypt(username, password, data):
 
     return encrypt(data, key, iv)
 
+
+# 精确到亿 999999999
+def fixed_float(num, fixed=2):
+    return round(float("%fe-%s" % (round(float("%fe+%s" % (num, fixed )), 0), fixed)), fixed)
