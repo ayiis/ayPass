@@ -11,8 +11,7 @@ class MY_REDIS(object):
         super(MY_REDIS, self).__init__()
         ts = datetime.datetime.now()
         MY_REDIS.col = { key:{"ts": ts, "val": arg[key] } for key in arg }
-        tornado_timmer.set_interval(1, self.auto_refresh_expire_user)
-        # tornado_timmer.set_interval(MY_REDIS.refresh_period, self.auto_refresh_expire_user)
+        tornado_timmer.set_interval(MY_REDIS.refresh_period, self.auto_refresh_expire_user)
 
     def auto_refresh_expire_user(self):
         ts = datetime.datetime.now()

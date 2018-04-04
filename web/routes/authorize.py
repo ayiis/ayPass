@@ -24,8 +24,9 @@ def do(func):
             print "ua:", self.request.headers.get("user-agent")
             return self.render("deny.html")
 
-        # api接口一定是从nginx转发过来的
+        # 生产环境下，api接口是通过nginx转发访问的
         if config.SYSTEM["environment"] == "pro":
+            # nginx 将<remote_ip>写入请求的 header["Ng-Real-Ip"] 中
             if self.request.remote_ip != "127.0.0.1" or not self.request.headers.get("Ng-Real-Ip"):
                 return self.render("deny.html")
 
