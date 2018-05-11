@@ -50,7 +50,7 @@ def edit(self, req_data):
 
     yield self.user.record.update(_id=req_data["id"], title=req_data["title"], content=record_content, update_datetime=user_local_datetime)
 
-    self.user.log.create("SIGN_IN", req_data["id"], user_local_datetime)
+    self.user.log.create("EDIT_TEXT", req_data["id"], user_local_datetime)
 
     raise tornado.gen.Return( "Note editd succeed at %s." % user_local_datetime)
 
