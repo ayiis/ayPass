@@ -1,0 +1,51 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        style(type='text/css').
+            @import url("/css/main.css");
+        title Note create
+    body.ui_indigo
+        | {% include './template/header'%}
+        .page-with-new-sidebar.page-with-sidebar
+            | {% include './template/nav-sidebar'%}
+            .content-wrapper.page-with-new-nav
+                .mobile-overlay
+                .alert-wrapper
+                    nav.breadcrumbs.container-fluid.container-limited(role='navigation')
+                        .breadcrumbs-container
+                            button.toggle-mobile-nav(name='button', type='button')
+                                span.sr-only Open sidebar
+                                i.fa.fa-bars(aria-hidden='true', data-hidden='true')
+                            .breadcrumbs-links.js-title-container
+                                ul.list-unstyled.breadcrumbs-list.js-breadcrumbs-list
+                                    li
+                                        a(href='/note_list') Notes
+                                        svg.s8.breadcrumbs-list-angle
+                                            use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#angle-right')
+                                    li
+                                        h2.breadcrumbs-sub-title New note
+                    .flash-container.flash-container-page
+                .container-fluid.container-limited
+                    #content-body.content
+                        .row.prepend-top-default
+                            .col-lg-9
+                                .form-group
+                                    .input-group
+                                        .input-group-addon  Note name
+                                        input#i_title.form-control(type='text')
+                                #new_gpg_key.js-requires-input
+                                    .form-group
+                                        textarea#ta_content.form-control(rows='8', placeholder='This part is private in the storage with strong encryption, no one (even us) besides you has the right to access it.')
+                                    .prepend-top-default
+                                        input#btn_save.btn.btn-create(type='submit', name='commit', value='Save')
+                                        span#btn_lock_switch.btn.prepend-left-10.visibility-icon.has-tooltip(data-container='body', data-placement='left', locked='0')
+                                            i.fa.fa-unlock.fa-fw(aria-hidden='true', data-hidden='true')
+                                            | Unlocked
+                                hr
+                                h5#res_status Notice
+                                .append-bottom-default
+                                    pre#p_message.settings-message.text-center
+                                        | One misoperation to make it gone forever, take seriously what you are editing.
+        | {% include './template/bottom_script'%}
+        script(src='/js/note_create.js')

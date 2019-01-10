@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">@import url("/pbs/@.css");
+        </style>
+        <title>Project BlackStone</title>
+    </head>
+    <body onload="video.playbackRate=0.6" class="blackstone login">
+        <div class="overlay video">
+            <video poster="/pbs/@.jpg" autoplay="autoplay" loop="loop" class="video-background">
+                <source src="/pbs/@.ogv" type="video/ogg" codecs="theora,vorbis"></source>
+            </video>
+        </div>
+        <div class="main content">
+            <div class="login container"><img src="/pbs/@.png" class="logo">
+                <form class="login-form">
+                    <input type="text" value="Access Denied" disabled="" class="accesscode">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,80 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        style(type='text/css') @import url("/css/main.css");
+        title Account
+    body.ui_indigo(data-group='', data-page='profiles:accounts:show', data-project='')
+        | {% include './template/header'%}
+        .page-with-new-sidebar.page-with-sidebar
+            | {% include './template/nav-sidebar'%}
+            .content-wrapper.page-with-new-nav
+                .mobile-overlay
+                .alert-wrapper
+                    nav.breadcrumbs.container-fluid.container-limited.limit-container-width(role='navigation')
+                        .breadcrumbs-container
+                            button.toggle-mobile-nav(name='button', type='button')
+                                span.sr-only Open sidebar
+                                i.fa.fa-bars(aria-hidden='true', data-hidden='true')
+                            .breadcrumbs-links.js-title-container
+                                ul.list-unstyled.breadcrumbs-list.js-breadcrumbs-list
+                                    li
+                                        a(href='/account') User Center
+                                        svg.s8.breadcrumbs-list-angle
+                                            use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#angle-right')
+                                    li
+                                        h2.breadcrumbs-sub-title Account
+                    .flash-container.flash-container-page
+                .container-fluid.container-limited.limit-container-width
+                    #content-body.content
+                        .row.prepend-top-default
+                            .col-lg-4.profile-settings-sidebar
+                                h4.prepend-top-0  Private Key
+                                p
+                                    | It was yours.
+                            .col-lg-8.private-tokens-reset
+                                .reset-action
+                                    p.cgray
+                                        label.label-light(for='private-token') Private key
+                                        input#private-token.form-control(type='text', name='private-token', value='{{ data.user.username }}')
+                                    p.help-block
+                                        | Your private key is to refer to your account.
+                        hr
+                        .row.prepend-top-default
+                            .col-lg-4.profile-settings-sidebar
+                                h4.prepend-top-0  Two-Factor Authentication
+                                p
+                                    | Increase your account's security by enabling Two-Factor Authentication (2FA).
+                            .col-lg-8
+                                p
+                                    | Status: Disabled
+                                .append-bottom-10
+                                    a.btn.btn-success.disabled(href='/two_factor_auth', disabled='') Enable two-factor authentication
+                        hr
+                        .row.prepend-top-default
+                            .col-lg-4.profile-settings-sidebar
+                                h4.prepend-top-0.danger-title  Delete account
+                            .col-lg-8
+                                p.danger-title
+                                    | Deleting an account has the following effects:
+                                ul
+                                    li  All user's contents will be removed.
+                                    li  All user's settings will be removed.
+                                    li  All user's logs will be removed.
+                                    li  No way back. Gone forever.
+                                div
+                                    button#btn_delete_account.btn.btn-danger(type='button')
+                                        | Delete account
+                                .form-group.hidden
+                                    label.label-light(for='new_username') Current username
+                                    input#username.form-control(type='text', required='')
+                                .form-group.hidden
+                                    label.label-light(for='new_password') Current password
+                                    input#password.form-control(type='password', required='')
+                                .hidden
+                                    button#btn_ensure_delete.btn.btn-danger(type='button')
+                                        | Ensure Delete
+                                    span#danger_message.danger-title Ensure your operation by entering your username and password.
+                        .append-bottom-default
+        | {% include './template/bottom_script'%}
+        script(src='/js/account.js')

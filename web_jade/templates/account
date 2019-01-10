@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style type="text/css">@import url("/css/main.css");</style>
+        <title>Account</title>
+    </head>
+    <body data-group="" data-page="profiles:accounts:show" data-project="" class="ui_indigo">{% include './template/header'%}
+        <div class="page-with-new-sidebar page-with-sidebar">{% include './template/nav-sidebar'%}
+            <div class="content-wrapper page-with-new-nav">
+                <div class="mobile-overlay"></div>
+                <div class="alert-wrapper">
+                    <nav role="navigation" class="breadcrumbs container-fluid container-limited limit-container-width">
+                        <div class="breadcrumbs-container">
+                            <button name="button" type="button" class="toggle-mobile-nav"><span class="sr-only">Open sidebar</span><i aria-hidden="true" data-hidden="true" class="fa fa-bars"></i>
+                            </button>
+                            <div class="breadcrumbs-links js-title-container">
+                                <ul class="list-unstyled breadcrumbs-list js-breadcrumbs-list">
+                                    <li><a href="/account">User Center</a>
+                                        <svg class="s8 breadcrumbs-list-angle">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#angle-right"></use>
+                                        </svg>
+                                    </li>
+                                    <li>
+                                        <h2 class="breadcrumbs-sub-title">Account</h2>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="flash-container flash-container-page"></div>
+                </div>
+                <div class="container-fluid container-limited limit-container-width">
+                    <div id="content-body" class="content">
+                        <div class="row prepend-top-default">
+                            <div class="col-lg-4 profile-settings-sidebar">
+                                <h4 class="prepend-top-0">Private Key</h4>
+                                <p>It was yours.
+                                </p>
+                            </div>
+                            <div class="col-lg-8 private-tokens-reset">
+                                <div class="reset-action">
+                                    <p class="cgray">
+                                        <label for="private-token" class="label-light">Private key</label>
+                                        <input id="private-token" type="text" name="private-token" value="{{ data.user.username }}" class="form-control">
+                                    </p>
+                                    <p class="help-block">Your private key is to refer to your account.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row prepend-top-default">
+                            <div class="col-lg-4 profile-settings-sidebar">
+                                <h4 class="prepend-top-0">Two-Factor Authentication</h4>
+                                <p>Increase your account's security by enabling Two-Factor Authentication (2FA).
+                                </p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p>Status: Disabled
+                                </p>
+                                <div class="append-bottom-10"><a href="/two_factor_auth" disabled="" class="btn btn-success disabled">Enable two-factor authentication</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row prepend-top-default">
+                            <div class="col-lg-4 profile-settings-sidebar">
+                                <h4 class="prepend-top-0 danger-title">Delete account</h4>
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="danger-title">Deleting an account has the following effects:
+                                </p>
+                                <ul>
+                                    <li>All user's contents will be removed.</li>
+                                    <li>All user's settings will be removed.</li>
+                                    <li>All user's logs will be removed.</li>
+                                    <li>No way back. Gone forever.</li>
+                                </ul>
+                                <div>
+                                    <button id="btn_delete_account" type="button" class="btn btn-danger">Delete account
+                                    </button>
+                                </div>
+                                <div class="form-group hidden">
+                                    <label for="new_username" class="label-light">Current username</label>
+                                    <input id="username" type="text" required="" class="form-control">
+                                </div>
+                                <div class="form-group hidden">
+                                    <label for="new_password" class="label-light">Current password</label>
+                                    <input id="password" type="password" required="" class="form-control">
+                                </div>
+                                <div class="hidden">
+                                    <button id="btn_ensure_delete" type="button" class="btn btn-danger">Ensure Delete
+                                    </button><span id="danger_message" class="danger-title">Ensure your operation by entering your username and password.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="append-bottom-default"></div>
+                    </div>
+                </div>
+            </div>
+        </div>{% include './template/bottom_script'%}
+        <script src="/js/account.js"></script>
+    </body>
+</html>

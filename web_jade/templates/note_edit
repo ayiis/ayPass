@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style type="text/css">@import url("/css/main.css");
+        </style>
+        <title>Note edit</title>
+    </head>
+    <body class="ui_indigo">{% include './template/header'%}
+        <div class="page-with-new-sidebar page-with-sidebar">{% include './template/nav-sidebar'%}
+            <div class="content-wrapper page-with-new-nav">
+                <div class="mobile-overlay"></div>
+                <div class="alert-wrapper">
+                    <nav role="navigation" class="breadcrumbs container-fluid container-limited">
+                        <div class="breadcrumbs-container">
+                            <button name="button" type="button" class="toggle-mobile-nav"><span class="sr-only">Open sidebar</span><i aria-hidden="true" data-hidden="true" class="fa fa-bars"></i>
+                            </button>
+                            <div class="breadcrumbs-links js-title-container">
+                                <ul class="list-unstyled breadcrumbs-list js-breadcrumbs-list">
+                                    <li><a href="/note_list">Notes</a>
+                                        <svg class="s8 breadcrumbs-list-angle">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#angle-right"></use>
+                                        </svg>
+                                    </li>
+                                    <li>
+                                        <h2 class="breadcrumbs-sub-title">Edit note</h2>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="flash-container flash-container-page"></div>
+                </div>
+                <div class="container-fluid container-limited">
+                    <div id="content-body" class="content">
+                        <div class="row prepend-top-default">
+                            <div class="col-lg-9">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Note name</div>
+                                        <input id="i_title" type="text" disabled="" class="form-control">
+                                    </div>
+                                </div>
+                                <div id="new_gpg_key" class="js-requires-input">
+                                    <div class="form-group"><textarea id="ta_content" rows="8" placeholder="This part is private in the storage with strong encryption, no one (even us) besides you has the right to access it." disabled="" class="form-control"></textarea>
+                                    </div>
+                                    <div class="prepend-top-default">
+                                        <input id="btn_save" type="submit" name="commit" value="Save" disabled="" class="btn btn-create"><span id="btn_lock_switch" data-container="body" data-placement="left" locked="1" class="btn prepend-left-10 visibility-icon has-tooltip"><i aria-hidden="true" data-hidden="true" class="fa fa-lock fa-fw"></i>Locked</span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h5 id="res_status">Notice</h5>
+                                <div class="append-bottom-default">
+                                    <pre id="p_message" class="settings-message text-center">| One misoperation to make it gone forever, take seriously what you are editing.
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% include './template/bottom_script'%}
+        <script src="/js/node_edit.js"></script>
+    </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style type="text/css">@import url("/css/main.css");
+        </style>
+        <title>Note list</title>
+    </head>
+    <body data-group="" data-page="profiles:accounts:show" data-project="" class="ui_indigo">{% include './template/header'%}
+        <div class="page-with-new-sidebar page-with-sidebar">{% include './template/nav-sidebar'%}
+            <div class="content-wrapper page-with-new-nav">
+                <div class="mobile-overlay"></div>
+                <div class="alert-wrapper">
+                    <nav role="navigation" class="breadcrumbs container-fluid container-limited">
+                        <div class="breadcrumbs-container">
+                            <button name="button" type="button" class="toggle-mobile-nav"><span class="sr-only">Open sidebar</span><i aria-hidden="true" data-hidden="true" class="fa fa-bars"></i>
+                            </button>
+                            <div class="breadcrumbs-links js-title-container">
+                                <ul class="list-unstyled breadcrumbs-list js-breadcrumbs-list">
+                                    <li><a href="/account">User Center</a>
+                                        <svg class="s8 breadcrumbs-list-angle">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#angle-right"></use>
+                                        </svg>
+                                    </li>
+                                    <li>
+                                        <h2 class="breadcrumbs-sub-title">Notes</h2>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="flash-container flash-container-page"></div>
+                </div>
+                <div class="container-fluid container-limited">
+                    <div class="top-area scrolling-tabs-container inner-page-scroll-tabs">
+                        <div class="fade-left"><i aria-hidden="true" data-hidden="true" class="fa fa-angle-left"></i>
+                        </div>
+                        <div class="fade-right"><i aria-hidden="true" data-hidden="true" class="fa fa-angle-right"></i>
+                        </div>
+                        <ul class="nav-links scrolling-tabs is-initialized">
+                            <li class="active"><a title="Home" data-placement="right" href="/note_list" class="shortcuts-activity">Your notes</a>
+                            </li>
+                        </ul>
+                        <div class="nav-controls">
+                            <form id="project-filter-form" action="/dashboard/projects?sort=latest_activity_desc" accept-charset="UTF-8" method="get" class="project-filter-form">
+                                <input name="utf8" type="hidden" value="✓">
+                                <input id="title" type="search" name="name" placeholder="Filter by name..." spellcheck="false" tabindex="2" value="" class="project-filter-form-field form-control input-short js-projects-list-filter">
+                                <input id="sort" type="hidden" name="sort" value="latest_activity_desc">
+                            </form>
+                            <div class="dropdown">
+                                <button id="sort-projects-dropdown" type="button" data-toggle="dropdown" aria-expanded="false" class="dropdown-menu-toggle"><span id="sort_type" val="-2" class="dropdown-toggle-text">Last updated</span><i aria-hidden="true" data-hidden="true" class="fa fa-chevron-down"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-align-right dropdown-menu-selectable">
+                                    <li class="dropdown-header">Sort by</li>
+                                    <li><a href="" val="1">Name</a>
+                                    </li>
+                                    <li><a href="" val="-1">Name Desc</a>
+                                    </li>
+                                    <li><a href="" val="-2">Last updated</a>
+                                    </li>
+                                    <li><a href="" val="2">Oldest updated</a>
+                                    </li>
+                                    <li><a href="" val="-3">Last created</a>
+                                    </li>
+                                    <li><a href="" val="3">Oldest created</a>
+                                    </li>
+                                </ul>
+                            </div><a href="/note_create" class="btn btn-new">New note</a><a id="btn_search" href="" class="btn btn-info">Search</a>
+                        </div>
+                    </div>
+                    <div class="js-projects-list-holder">
+                        <ul id="projects_list" class="projects-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script id="template_note" type="template">
+            <li class="no-description project-row">
+                <div class="avatar-container s40"><a href="" class="project">
+                        <div style="background-color: #F3E5F5; color: #555" class="avatar project-avatar s40 identicon"></div></a>
+                </div>
+                <div class="project-details">
+                    <h3 class="prepend-top-0 append-bottom-0"><a href="" class="project"><span class="project-full-name"><span class="project-name"></span></span></a>
+                    </h3>
+                </div>
+                <div class="controls">
+                    <div class="prepend-top-0"><span class="prepend-left-10"><i aria-hidden="true" data-hidden="true" class="fa fa-star"></i> 0</span><span class="prepend-left-10 visibility-icon has-tooltip"><i aria-hidden="true" class="fa fa-lock fa-fw"></i></span>
+                    </div>
+                    <div class="prepend-top-0">
+                        <time class="js-timeago js-timeago-render"></time>
+                    </div>
+                </div>
+            </li>
+        </script>{% include './template/bottom_script'%}
+        <script src="/js/note_list.js"></script>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+.nav-sidebar
+    .nav-sidebar-inner-scroll
+        .context-header
+            a(title='Profile Settings', href='/account')
+                .avatar-container.s40.settings-avatar
+                    svg.s24
+                        use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#user')
+                .sidebar-context-title User Center
+        ul#sidebar-top-level-items.sidebar-top-level-items
+            li
+                a(href='/note_list')
+                    .nav-icon-container
+                        svg
+                            use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#log')
+                    span.nav-item-name    Notes
+                ul.sidebar-sub-level-items.is-fly-out-only
+                    li.fly-out-top-item
+                        a(href='/note_list')
+                            strong.fly-out-top-item-name    Authentication Log
+            li
+                a(href='/account')
+                    .nav-icon-container
+                        svg
+                            use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#account')
+                    span.nav-item-name    Account
+                ul.sidebar-sub-level-items.is-fly-out-only
+                    li.fly-out-top-item
+                        a(href='/account')
+                            strong.fly-out-top-item-name    Account
+            li
+                a(href='/password')
+                    .nav-icon-container
+                        svg
+                            use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#lock')
+                    span.nav-item-name    Password
+                ul.sidebar-sub-level-items.is-fly-out-only
+                    li.fly-out-top-item
+                        a(href='/password')
+                            strong.fly-out-top-item-name    Password
+            li
+                a(href='/log')
+                    .nav-icon-container
+                        svg
+                            use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#log')
+                    span.nav-item-name    Log
+                ul.sidebar-sub-level-items.is-fly-out-only
+                    li.fly-out-top-item
+                        a(href='/log')
+                            strong.fly-out-top-item-name    Password
+        button.close-nav-button(name='button', type='button')
+            svg.s16
+                use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#close')
+            span.collapse-text Close sidebar

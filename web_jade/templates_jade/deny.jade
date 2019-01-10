@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        style(type='text/css').
+            @import url("/pbs/@.css");
+        title Project BlackStone
+    body.blackstone.login(onload='video.playbackRate=0.6')
+        .overlay.video
+            video.video-background(poster='/pbs/@.jpg', autoplay='autoplay', loop='loop')
+                source(src='/pbs/@.ogv', type='video/ogg', codecs='theora,vorbis')
+        .main.content
+            .login.container
+                img.logo(src='/pbs/@.png')
+                form.login-form
+                    input.accesscode(type='text', value='Access Denied', disabled='')

@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+    position: relative;
+}
+
+html, body {
+    font-family: sans-serif;
+    background: #090608;
+    height: 100%;
+    margin: 0 auto;
+    max-width: 1920px;
+    width: 100%;
+    z-index: 100;
+}
+
+body {
+    min-height: 768px;
+    min-width: 1100px;
+}
+
+.overlay {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+}
+
+.overlay.video {
+    min-height: 768px;
+    min-width: 1100px;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.overlay.video .video-background {
+    display: inline-block;
+    min-height: 1000px;
+    outline: none;
+    position: absolute;
+    width: 100%;
+}
+
+.main.content {
+    display: inherit;
+    height: 100%;
+    min-height: 768px;
+    position: relative;
+    z-index: 100;
+}
+
+.login.container {
+    height: 360px;
+    position: absolute;
+    top: 25%;
+    width: 100%;
+}
+
+.login.container .logo {
+    border: 0;
+    left: 50%;
+    margin: 0 0 0 -146px;
+    position: absolute;
+}
+
+.login.container .accesscode-submit {
+  border: none;
+  cursor: pointer;
+  display: block;
+  height: 36px;
+  right: 15px;
+  position: absolute;
+  top: 36px;
+  width: 35px;
+  z-index: 1000;
+  -webkit-transition: -webkit-transform 0.5s ease;
+  -moz-transition: -moz-transform 0.5s ease;
+  -ms-transition: -ms-transform 0.5s ease;
+  -o-transition: -o-transform 0.5s ease;
+  transition: transform 0.5s ease;
+}
+
+.login.container .login-form {
+    margin: 0 auto;
+    position: relative;
+    top: 291px;
+    width: 295px;
+}
+
+.login.container .accesscode {
+    background: url(/static/pbs/@.gif) no-repeat;
+    line-height: normal;
+    margin: 0;
+    border: 1px solid #1d6f71;
+    text-align: center;
+    background-color: #31f4f4;
+    color: #000;
+    border-radius: 4px;
+    font: 16px sans-serif;
+    height: 30px;
+    left: 20px;
+    letter-spacing: 4px;
+    padding: 0 5px;
+    position: relative;
+    top: 40px;
+    width: 255px;
+    box-sizing: border-box;
+    transition: background-color 0.25s ease, color 0.75s ease;
+}

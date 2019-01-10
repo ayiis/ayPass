@@ -1,0 +1,85 @@
+doctype html
+html
+    head
+        meta(charset='UTF-8')
+        style(type='text/css').
+            @import url("/css/main.css");
+        title Note list
+    body.ui_indigo(data-group='', data-page='profiles:accounts:show', data-project='')
+        | {% include './template/header'%}
+        .page-with-new-sidebar.page-with-sidebar
+            | {% include './template/nav-sidebar'%}
+            .content-wrapper.page-with-new-nav
+                .mobile-overlay
+                .alert-wrapper
+                    nav.breadcrumbs.container-fluid.container-limited(role='navigation')
+                        .breadcrumbs-container
+                            button.toggle-mobile-nav(name='button', type='button')
+                                span.sr-only Open sidebar
+                                i.fa.fa-bars(aria-hidden='true', data-hidden='true')
+                            .breadcrumbs-links.js-title-container
+                                ul.list-unstyled.breadcrumbs-list.js-breadcrumbs-list
+                                    li
+                                        a(href='/account') User Center
+                                        svg.s8.breadcrumbs-list-angle
+                                            use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='/css/icons-76c4a61a43b91bb8e4cde6ba509e3919850e80bc83382ff1f8bce2ef19a1b33f.svg#angle-right')
+                                    li
+                                        h2.breadcrumbs-sub-title Notes
+                    .flash-container.flash-container-page
+                .container-fluid.container-limited
+                    .top-area.scrolling-tabs-container.inner-page-scroll-tabs
+                        .fade-left
+                            i.fa.fa-angle-left(aria-hidden='true', data-hidden='true')
+                        .fade-right
+                            i.fa.fa-angle-right(aria-hidden='true', data-hidden='true')
+                        ul.nav-links.scrolling-tabs.is-initialized
+                            li.active
+                                a.shortcuts-activity(title='Home', data-placement='right', href='/note_list') Your notes
+                        .nav-controls
+                            form#project-filter-form.project-filter-form(action='/dashboard/projects?sort=latest_activity_desc', accept-charset='UTF-8', method='get')
+                                input(name='utf8', type='hidden', value='✓')
+                                input#title.project-filter-form-field.form-control.input-short.js-projects-list-filter(type='search', name='name', placeholder='Filter by name...', spellcheck='false', tabindex='2', value='')
+                                input#sort(type='hidden', name='sort', value='latest_activity_desc')
+                            .dropdown
+                                button#sort-projects-dropdown.dropdown-menu-toggle(type='button', data-toggle='dropdown', aria-expanded='false')
+                                    span#sort_type.dropdown-toggle-text(val='-2') Last updated
+                                    i.fa.fa-chevron-down(aria-hidden='true', data-hidden='true')
+                                ul.dropdown-menu.dropdown-menu-align-right.dropdown-menu-selectable
+                                    li.dropdown-header    Sort by
+                                    li
+                                        a(href='', val='1') Name
+                                    li
+                                        a(href='', val='-1') Name Desc
+                                    li
+                                        a(href='', val='-2') Last updated
+                                    li
+                                        a(href='', val='2') Oldest updated
+                                    li
+                                        a(href='', val='-3') Last created
+                                    li
+                                        a(href='', val='3') Oldest created
+                            a.btn.btn-new(href='/note_create') New note
+                            a#btn_search.btn.btn-info(href='') Search
+                    .js-projects-list-holder
+                        ul#projects_list.projects-list
+        script#template_note(type='template')
+            li.no-description.project-row
+              .avatar-container.s40
+                a.project(href='')
+                  .avatar.project-avatar.s40.identicon(style='background-color: #F3E5F5; color: #555')
+              .project-details
+                h3.prepend-top-0.append-bottom-0
+                  a.project(href='')
+                    span.project-full-name
+                      span.project-name
+              .controls
+                .prepend-top-0
+                  span.prepend-left-10
+                    i.fa.fa-star(aria-hidden='true', data-hidden='true')
+                    |  0
+                  span.prepend-left-10.visibility-icon.has-tooltip
+                    i.fa.fa-lock.fa-fw(aria-hidden='true')
+                .prepend-top-0
+                  time.js-timeago.js-timeago-render
+        | {% include './template/bottom_script'%}
+        script(src='/js/note_list.js')
