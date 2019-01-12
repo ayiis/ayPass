@@ -4,10 +4,9 @@ html
         style(type='text/css').
             @import url("/pbs/@.css");
         title Project BlackStone
-    body.blackstone.login(onload='video.playbackRate=0.6')
+    body.blackstone.login
         .overlay.video
-            video.video-background(poster='/pbs/@.jpg', autoplay='autoplay', loop='loop')
-                source(src='/pbs/@.ogv', type='video/ogg', codecs='theora,vorbis')
+            video.video-background(poster='/pbs/@.jpg')
         .main.content
             .login.container
                 img.logo(src='/pbs/@.png')

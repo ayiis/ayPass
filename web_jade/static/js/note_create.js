@@ -34,7 +34,7 @@
         event.preventDefault();
         $.ajax({
             type: 'POST',
-            contentType: 'application/json',
+            contentType: 'application/json; charset=UTF-8',
             url: '/api/note_create',
             data: JSON.stringify(req_data),
             dataType: 'json',

@@ -16,7 +16,7 @@
         }
         $.ajax({
             type: 'POST',
-            contentType: 'application/json',
+            contentType: 'application/json; charset=UTF-8',
             url: '/api/user_delete',
             data: JSON.stringify(req_data),
             dataType: 'json',

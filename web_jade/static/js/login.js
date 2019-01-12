@@ -10,7 +10,7 @@
         if(req_data.username && req_data.password) {
             $.ajax({
                 type: 'POST',
-                contentType: 'application/json',
+                contentType: 'application/json; charset=UTF-8',
                 url: '/api/user_login',
                 data: JSON.stringify(req_data),
                 dataType: 'json',
@@ -41,7 +41,7 @@
         if(req_data.username && req_data.password) {
             $.ajax({
                 type: 'POST',
-                contentType: 'application/json',
+                contentType: 'application/json; charset=UTF-8',
                 url: '/api/user_create',
                 data: JSON.stringify(req_data),
                 dataType: 'json',

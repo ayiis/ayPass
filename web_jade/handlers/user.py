@@ -44,7 +44,7 @@ def logout(self, req_data):
 # 更新用户密码
 @tornado.gen.coroutine
 def change(self, req_data):
-    # print "req_data:", req_data
+    print("req_data:", req_data)
     success = yield self.user.change_password(req_data["old_password"], req_data["new_username"], req_data["new_password"])
     if success:
         del redisp.ONLINE_USERS[self.user.username]

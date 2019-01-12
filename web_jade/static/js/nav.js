@@ -10,7 +10,7 @@
         var req_data = {}
         $.ajax({
             type: 'POST',
-            contentType: 'application/json',
+            contentType: 'application/json; charset=UTF-8',
             url: '/api/user_logout',
             data: JSON.stringify(req_data),
             dataType: 'json',

@@ -6,7 +6,7 @@
     }
     $.ajax({
         type: 'POST',
-        contentType: 'application/json',
+        contentType: 'application/json; charset=UTF-8',
         url: '/api/note_query',
         data: JSON.stringify(req_data),
         dataType: 'json',
@@ -65,7 +65,7 @@
         event.preventDefault();
         $.ajax({
             type: 'POST',
-            contentType: 'application/json',
+            contentType: 'application/json; charset=UTF-8',
             url: '/api/note_edit',
             data: JSON.stringify(req_data),
             dataType: 'json',

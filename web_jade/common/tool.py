@@ -10,10 +10,8 @@ import base64
 import traceback
 import zlib
 
-from Crypto.Cipher import AES, DES
+from Crypto.Cipher import AES
 from bson.objectid import ObjectId
-
-from conf import config
 
 
 class MyEncoder(json.JSONEncoder):
@@ -33,6 +31,8 @@ class MyEncoder(json.JSONEncoder):
             return time.strftime("%H:%M:%S", time.localtime(obj.seconds + 60 * 60 * (24 - 8)))  # hacked
         elif isinstance(obj, decimal.Decimal):
             return float(obj)
+        elif isinstance(obj, bytes):
+            return obj.decode("utf8")
         # elif isinstance(obj, enum.Enum):
         #     return obj.value
         elif isinstance(obj, Exception):
@@ -48,66 +48,58 @@ class MyEncoder(json.JSONEncoder):
 
 def wrap_unicode(data):
     if isinstance(data, dict):
-        return {wrap_unicode(key): wrap_unicode(value) for key, value in data.iteritems()}
+        return {wrap_unicode(key): wrap_unicode(value) for key, value in data.items()}
     elif isinstance(data, list):
         return [wrap_unicode(element) for element in data]
-    elif isinstance(data, unicode):
-        return data.encode("utf-8")
+    elif isinstance(data, bytes):
+        return data.decode("utf-8")
     else:
         return data
 
 
 def json_stringify(data):
-    return json.dumps(wrap_unicode(data), cls=MyEncoder, encoding="utf-8", ensure_ascii=False)
+    return json.dumps(wrap_unicode(data), cls=MyEncoder)
 
 
 def json_load(data):
     return wrap_unicode(json.loads(data))
 
 
-def getMd5Base64(val):
-    val = val.encode("utf8")
-    hash = hashlib.md5()
-    hash.update(val)
-    return base64.encodestring(hash.digest()).rstrip()
-
-
-def get_md5_digest(text):
-    text = "%s:%s" % (text, config.SECRET["md5_salt"])
+def get_md5_digest(text, salt):
+    text = "%s:%s" % (text, salt)
     text = text.encode("utf8")
     return hashlib.md5(text).digest()
 
 
-# BS = 16
-unpad_pkcs5 = lambda s: s[0:-ord(s[-1])]
+class AESCipher(object):
+    """
+        Accept <unicode> and return <unicode>, or cannot count the right length
+        afaik AES.MODE_CBC only accept utf8, AES.MODE_CFB may be another choice to handle Chinese
+    """
+    bs = 16
 
+    @staticmethod
+    def encrypt(raw_text, iv, key):
+        raw_text = AESCipher._pad(raw_text)
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        return base64.b64encode(cipher.encrypt(raw_text))
 
-def aes_decrypt(text, key, iv):
-    # 解密字符串
-    return AES.new(key, AES.MODE_CBC, iv).decrypt(base64.b64decode(text))
+    @staticmethod
+    def decrypt(enc_text, iv, key):
+        data = base64.b64decode(enc_text)
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        decrypted = cipher.decrypt(data)
+        decrypted = AESCipher._unpad(decrypted)
+        return decrypted
 
+    @staticmethod
+    def _pad(text):
+        t_len = len(text)
+        if not isinstance(text, bytes):
+            t_len = len(text.encode("utf8"))
+        pan_len = AESCipher.bs - t_len % AESCipher.bs
+        return text + pan_len * chr(pan_len)
 
-def encrypt(text, key, iv):
-    # 加密字符串
-    return base64.b64encode(AES.new(key, AES.MODE_CBC, iv).encrypt(text + ("\0" * (16 - (len(text) % 16)))))
-
-
-def decrypt(text, key, iv):
-    # 解密字符串
-    return AES.new(key, AES.MODE_CBC, iv).decrypt(base64.b64decode(text)).rstrip("\0")
-
-
-def gzip_decode(g_data):
-    return zlib.decompress(g_data, zlib.MAX_WBITS | 32)
-
-
-def my_encrypt(username, password, data):
-    key = hashlib.md5(data).digest(username)
-    iv = hashlib.md5(data).digest(password)
-
-    return encrypt(data, key, iv)
-
-
-# 精确到亿 999999999
-def fixed_float(num, fixed=2):
-    return round(float("%fe-%s" % (round(float("%fe+%s" % (num, fixed)), 0), fixed)), fixed)
+    @staticmethod
+    def _unpad(text):
+        return text[:-ord(text[len(text) - 1:])]

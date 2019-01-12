@@ -11,7 +11,7 @@
     }
     $.ajax({
         type: 'POST',
-        contentType: 'application/json',
+        contentType: 'application/json; charset=UTF-8',
         url: '/api/log_list',
         data: JSON.stringify(req_data),
         dataType: 'json',
@@ -21,15 +21,15 @@
                 for (var i = 0 ; i < res_data.data.length ; i++ ) {
                     console.log(1);
                     var item = res_data.data[i];
-                    var $templete_note = $($('#templete_log').html().trim());
-                    var $e1 = $templete_note.find('.description');
+                    var $template_note = $($('#template_log').html().trim());
+                    var $e1 = $template_note.find('.description');
                     var log_content = log_type[item['log_type']];
                     $e1.find('i').addClass(log_content['icon']);
                     $e1.find('.log_type').text(log_content['text']);
                     $e1.find('.target').text(item['target']).attr('href', '/note_edit?id=' + item['target']);
-                    $templete_note.find('.ip').text(item['userip']);
-                    $templete_note.find('.js-timeago').text(item['create_datetime']);
-                    ele_list.push($templete_note);
+                    $template_note.find('.ip').text(item['userip']);
+                    $template_note.find('.js-timeago').text(item['create_datetime']);
+                    ele_list.push($template_note);
                 }
                 $('#log_list').append(ele_list);
             } else {

@@ -61,6 +61,6 @@
             </div>
         </div>
 {% include './template/bottom_script'%}
-        <script src="/js/node_edit.js"></script>
+        <script src="/js/note_edit.js"></script>
     </body>
 </html>

@@ -7,7 +7,7 @@
         };
         $.ajax({
             type: 'POST',
-            contentType: 'application/json',
+            contentType: 'application/json; charset=UTF-8',
             url: '/api/note_list',
             data: JSON.stringify(req_data),
             dataType: 'json',
@@ -16,16 +16,16 @@
                     var ele_list = [];
                     for (var i = 0 ; i < res_data.data.length ; i++ ) {
                         var item = res_data.data[i];
-                        var $templete_note = $($('#templete_note').html().trim());
-                        var $e1 = $templete_note.find('.avatar-container .project');
+                        var $template_note = $($('#template_note').html().trim());
+                        var $e1 = $template_note.find('.avatar-container .project');
                         $e1.attr('href', '/note_edit?id=' + item['_id']);
                         $e1.find('div').text(item['title'][0]);
-                        var $e2 = $templete_note.find('.project-details .project');
+                        var $e2 = $template_note.find('.project-details .project');
                         $e2.attr('href', '/note_edit?id=' + item['_id']);
                         $e2.find('.project-name').text(item['title']);
-                        var $e3 = $templete_note.find('.controls');
+                        var $e3 = $template_note.find('.controls');
                         $e3.find('.js-timeago').text( 'U' + item['update_datetime'] + ' / ' + 'C' + item['create_datetime']);
-                        ele_list.push($templete_note);
+                        ele_list.push($template_note);
                     }
                     $('#projects_list').empty().append(ele_list);
                 } else {

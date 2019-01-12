@@ -5,8 +5,12 @@ import re
 import json
 import traceback
 
+from common.tool import json_load, json_stringify
+
 import tornado.web
 import tornado.gen
+
+from handlers import authorize
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -57,6 +61,7 @@ class TemplateHandler(BaseHandler):
         self.root = root
         self.default_filename = default_filename
 
+    @authorize.do
     def get(self, path):
         """
             Render request to the file in self.root
@@ -66,7 +71,7 @@ class TemplateHandler(BaseHandler):
         """
         self.path = path
         self.absolute_path = self.validate_absolute_path(self.root, self.path)
-        self.render(self.absolute_path, data=None, error=None)
+        self.render(self.absolute_path, data=self, error=None)
 
 
 class ApiHandler(BaseHandler):
@@ -97,7 +102,7 @@ class ApiHandler(BaseHandler):
             raise tornado.web.HTTPError(400, reason="`Content-Type` Must be `application/json; charset=UTF-8`")
         else:
             try:
-                request_data["body"] = json.loads(self.request.body)
+                request_data["body"] = json_load(self.request.body)
             except Exception:
                 print(traceback.format_exc())
                 raise tornado.web.HTTPError(400, reason="request json format invalid")
@@ -110,8 +115,9 @@ class ApiHandler(BaseHandler):
         """
         self.set_status(status_code)
         self.set_header("Content-Type", "application/json; charset=UTF-8")
-        self.finish(json.dumps(data))
+        self.finish(json_stringify(data))
 
+    @authorize.do
     @tornado.gen.coroutine
     def post(self):
         """

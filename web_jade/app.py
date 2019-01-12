@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 # __author__ = "ayiis"
 # create on 2019/01/01
 """
@@ -32,6 +31,7 @@ def make_app():
         "template_path": "templates",
         "autoreload": True,
         "debug": False,
+        "cookie_secret": config.SECRET["cookie_secret"],
     }
 
     from handlers import user, note, log
@@ -55,8 +55,8 @@ def make_app():
         (r"/main", main.MainHandler),
 
         # (.*) will pass the `request path` into the handler's get/post function, as an argument
-        # ? why don't they just use `self.request.path`
         # Tornado use mimetypes.guess_type to obtain Content-Type so you'd better name them properly
+        (r"/pbs/(.*)", StaticHandler, {"path": "static/pbs"}),
         (r"/css/(.*)", StaticHandler, {"path": "static/css"}),
         (r"/js/(.*)", StaticHandler, {"path": "static/js"}),
         (r"/img/(.*)", StaticHandler, {"path": "static/img"}),

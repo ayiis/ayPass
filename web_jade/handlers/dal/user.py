@@ -6,13 +6,15 @@ import tornado.gen
 from common import tool, mongodb
 from handlers.dal import record, log
 
+from conf import config
+
 
 class User(object):
 
     def __init__(self, arg):
         super(User, self).__init__()
-        self.key = tool.get_md5_digest(arg["username"])
-        self.iv = tool.get_md5_digest(arg["password"])
+        self.key = tool.get_md5_digest(arg["username"], config.SECRET["md5_salt"])
+        self.iv = tool.get_md5_digest(arg["password"], config.SECRET["md5_salt"])
         self.username = self.encrypt_data(arg["username"])
         self.password = self.encrypt_data(arg["password"])  # in fact, we dont need this
         self.logined = False
@@ -24,7 +26,7 @@ class User(object):
     @tornado.gen.coroutine
     def login(self):
 
-        # print "login:", self.username, self.password  # DEBUG
+        print("login:", self.username, self.password)  # DEBUG
         user_info = yield mongodb.DBS["aypass"]["users"].find_one({
             "username": self.username,
             "password": self.password,
@@ -49,7 +51,7 @@ class User(object):
 
     @tornado.gen.coroutine
     def create(self):
-        print("in exists")
+        print("in create:", self.username, self.password)
         user_exists = yield mongodb.DBS["aypass"]["users"].count_documents({
             "username": self.username,
         })
@@ -105,10 +107,10 @@ class User(object):
         # TODO: 通过修改 用户名+密码 合并两个用户的数据。
         # else:
         #     # raise tornado.gen.Return("Record already exists, create a new Password") # kidding me ?
-        #     raise tornado.gen.Return("You've been fucking joined two Records")
+        #     raise tornado.gen.Return("You've joined two user's Records")
 
     def encrypt_data(self, data):
-        return tool.encrypt(data, self.key, self.iv)
+        return tool.AESCipher.encrypt(data, self.key, self.iv)
 
     def decrypt_data(self, data):
-        return tool.decrypt(data, self.key, self.iv)
+        return tool.AESCipher.decrypt(data, self.key, self.iv)
